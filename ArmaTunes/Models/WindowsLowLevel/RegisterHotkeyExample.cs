@@ -38,8 +38,8 @@ namespace ArmaTunes.Models.WindowsLowLevel
         private static extern bool RegisterHotKey(
             [In] IntPtr hWnd,
             [In] int id,
-            [In] uint fsModifiers,
-            [In] uint vk);
+            [In] KeyModifiers fsModifiers,
+            [In] VirtualKeyCodes vk);
 
         [DllImport("User32.dll")]
         private static extern bool UnregisterHotKey(
@@ -57,9 +57,8 @@ namespace ArmaTunes.Models.WindowsLowLevel
         private void RegisterHotKey()
         {
             var helper = new WindowInteropHelper(window);
-            const uint VK_F10 = 0x79;
             const uint MOD_CTRL = 0x0002;
-            if (!RegisterHotKey(helper.Handle, HOTKEY_ID, MOD_CTRL, VK_F10))
+            if (!RegisterHotKey(helper.Handle, HOTKEY_ID, KeyModifiers.Control, VirtualKeyCodes.VK_CAPITAL))
             {
                 // handle error
             }

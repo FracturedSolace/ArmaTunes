@@ -74,14 +74,23 @@ namespace ArmaTunes.Models
 
             public void CloseAll()
             {
-                try
+                using(System.Diagnostics.Process killProcess = new System.Diagnostics.Process())
                 {
-                    Music2ArtificalMicrophone.Stop();
-                    Microphone2ArtificialMicrophone.Stop();
-                    Music2Speaker.Stop();
-                    ArtificialMicrophone2Speaker.Stop();
+                    killProcess.StartInfo.FileName = "taskkill";
+                    killProcess.StartInfo.Arguments = $"/f /im {AudioRepeaterExeTitle}";
+                    killProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    killProcess.Start();
+                    killProcess.WaitForExit();
                 }
-                catch (System.InvalidOperationException) { }
+                
+                //try
+                //{
+                //    Music2ArtificalMicrophone.Stop();
+                //    Microphone2ArtificialMicrophone.Stop();
+                //    Music2Speaker.Stop();
+                //    ArtificialMicrophone2Speaker.Stop();
+                //}
+                //catch (System.InvalidOperationException) { }
             }
             public void Reset()
             {
@@ -142,12 +151,14 @@ namespace ArmaTunes.Models
                 if (!this._active)
                     return;
                 
-                using (System.Diagnostics.Process vacCloseProcess = new System.Diagnostics.Process())
-                {
-                    vacCloseProcess.StartInfo.FileName = $"{VACDirectory}\\{AudioRepeaterExeTitle}";
-                    vacCloseProcess.StartInfo.Arguments = $"/CloseInstance:\"{this.Title}\"";
-                    vacCloseProcess.Start();
-                }
+                //using (System.Diagnostics.Process vacCloseProcess = new System.Diagnostics.Process())
+                //{
+                //    vacCloseProcess.StartInfo.FileName = $"{VACDirectory}\\{AudioRepeaterExeTitle}";
+                //    vacCloseProcess.StartInfo.Arguments = $"/CloseInstance:\"{this.Title}\"";
+                //    vacCloseProcess.Start();
+                //}
+
+                this.Process.Kill();
                 this._active = false;
             }
 

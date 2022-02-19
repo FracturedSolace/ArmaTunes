@@ -34,9 +34,18 @@
                 <TextBlock TextAlignment="Center">
                     Music<LineBreak/>
                     <TextBlock x:Name="txtMusicEnabled">[Off]</TextBlock> <LineBreak/>
-                    <TextBlock x:Name="txtToggleMusicKeybind">{Caps Lock}</TextBlock>
+                    <TextBlock x:Name="txtToggleMusicKeybind">{CAPS LOCK}</TextBlock>
                 </TextBlock>
             </Button>
+
+            <Button x:Name="btnMicPassthrough" IsEnabled="false" Click="BtnMicPassthrough_Click">
+                <TextBlock TextAlignment="Center">
+                    Mic Passthrough<LineBreak/>
+                    <TextBlock x:Name="txtMicPassThrough">[Enabled]</TextBlock><LineBreak/>
+                    {TILDE}
+                </TextBlock>
+            </Button>
+            
             <Button x:Name="btnToggleOutput"
                     Click="BtnToggleOutput_Click" IsEnabled="False">
                 <TextBlock TextAlignment="Center">

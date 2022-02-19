@@ -40,27 +40,12 @@ namespace ArmaTunes
 
             //Update btnToggleOutput
             txtListeningTo.Text = $"[{Relays.ListeningTo}]";
-        }
 
-        private void btnDefaultInstances_Click(object sender, RoutedEventArgs e)
-        {
-            Relays = new RelayCollection();
-
-            btnToggleMusic.IsEnabled = true;
-            btnToggleOutput.IsEnabled = true;
-
-            UpdateButtonText();
-
-            //Set the button to now REPLACE instances
-            ((Button)sender).Content = "Restart Default Instances";
-            ((Button)sender).Click -= btnDefaultInstances_Click;
-            ((Button)sender).Click += btnRestartInstances_Click;
-        }
-
-        private void btnRestartInstances_Click(object sender, RoutedEventArgs e)
-        {
-            Relays.Reset();
-            UpdateButtonText();
+            //Update btnMicPassThrough
+            if (Relays.Microphone2ArtificialMicrophone.Active)
+                txtMicPassThrough.Text = "[ON]";
+            else
+                txtMicPassThrough.Text = "[OFF]";
         }
 
         public void ToggleMusic()
@@ -82,6 +67,51 @@ namespace ArmaTunes
             UpdateButtonText();
         }
 
+        private void ToggleMicPassthrough()
+        {
+            //Skip this function altogether if the relays haven't been setup yet
+            if (Relays == null)
+                return;
+
+            if (Relays.Microphone2ArtificialMicrophone.Active)
+            {
+                Relays.Microphone2ArtificialMicrophone.Stop();
+            }
+            else
+            {
+                Relays.Microphone2ArtificialMicrophone.Start();
+            }
+
+            UpdateButtonText();
+        }
+
+        private void EnableButtons()
+        {
+            btnToggleMusic.IsEnabled = true;
+            btnToggleOutput.IsEnabled = true;
+            btnMicPassthrough.IsEnabled = true;
+        }
+
+        private void btnDefaultInstances_Click(object sender, RoutedEventArgs e)
+        {
+            Relays = new RelayCollection();
+
+            EnableButtons();
+
+            UpdateButtonText();
+
+            //Set the button to now REPLACE instances
+            ((Button)sender).Content = "Restart Default Instances";
+            ((Button)sender).Click -= btnDefaultInstances_Click;
+            ((Button)sender).Click += btnRestartInstances_Click;
+        }
+
+        private void btnRestartInstances_Click(object sender, RoutedEventArgs e)
+        {
+            Relays.Reset();
+            UpdateButtonText();
+        }
+
         private void btnToggleMusic_Click(object sender, RoutedEventArgs e)
         {
             ToggleMusic();
@@ -94,18 +124,29 @@ namespace ArmaTunes
             UpdateButtonText();
         }
 
+        private void BtnMicPassthrough_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleMicPassthrough();
+        }
+        
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Relays.CloseAll();
+            Relays?.CloseAll();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Hotkey hk = new Hotkey(this, 9049);
-            hk.OnHotKeyPressed += (object sender2, EventArgs e2) =>
+            //Associate the hotkey for music output toggle to CAPS
+            new Hotkey(this, 9019, KeyModifiers.None, VirtualKeyCodes.VK_CAPITAL, (object sender2, EventArgs e2) =>
             {
-                Debug.Write("Hotkey pressed!");
-            };
+                ToggleMusic();
+            });
+
+            //Associate the hotkey for mic passthrough to TILDE
+            new Hotkey(this, 9020, KeyModifiers.None, VirtualKeyCodes.VK_OEM_3, (object sender2, EventArgs e2) => 
+            {
+                ToggleMicPassthrough();
+            });
         }
     }
 }

@@ -72,7 +72,7 @@ namespace ArmaTunes.Models
                 ArtificialMicrophone2Speaker = new Relay(ArtificialMicrophoneRelay, SpeakerRelay, AutoStart: false, Title: "Artificial Microphone");
             }
 
-            public void CloseAll()
+            public static void CloseAll()
             {
                 using(System.Diagnostics.Process killProcess = new System.Diagnostics.Process())
                 {

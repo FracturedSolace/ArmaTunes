@@ -22,8 +22,12 @@ namespace ArmaTunes.Views
     /// </summary>
     public partial class SoundboardView : Window
     {
-        public SoundboardView()
+        private MainWindow parent;
+
+        public SoundboardView(MainWindow parent)
         {
+            this.parent = parent;
+
             InitializeComponent();
         }
 
@@ -33,7 +37,14 @@ namespace ArmaTunes.Views
             string file = (string)button.Tag;
 
             var vlc = new VLCWrapper(file);
-            vlc.Launch(autoStop:true);
+
+            //Stop the playlist while the soundboard plays
+            parent.VLCPlaylist.Stop();
+            //Play the sound and wait for it to finish
+            vlc.LaunchAndWait(autoStop:true);
+            //Restart the playlist
+            parent.VLCPlaylist.Launch();
+
 
             this.Close();
         }

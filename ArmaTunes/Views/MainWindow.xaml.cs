@@ -92,6 +92,8 @@ namespace ArmaTunes
             btnToggleMusic.IsEnabled = true;
             btnToggleOutput.IsEnabled = true;
             btnMicPassthrough.IsEnabled = true;
+            btnLaunchSoundboard.IsEnabled = true;
+            btnLaunchPlaylist.IsEnabled = true;
         }
 
         private void btnDefaultInstances_Click(object sender, RoutedEventArgs e)
@@ -133,12 +135,13 @@ namespace ArmaTunes
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Relays?.CloseAll();
+            RelayCollection.CloseAll();
             VLCPlaylist.Stop();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            RelayCollection.CloseAll();
             RegisterHotkeys();
         }
 
@@ -165,7 +168,10 @@ namespace ArmaTunes
 
         private void LaunchSoundboard()
         {
-            var window = new SoundboardView();
+            if (!btnLaunchSoundboard.IsEnabled)
+                return;
+
+            var window = new SoundboardView(this);
             window.Show();
         }
 

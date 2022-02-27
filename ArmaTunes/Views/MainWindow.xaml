@@ -62,12 +62,12 @@
         
         <!--Sound Panel Menu-->
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Click="btnLaunchPlaylist_Click">
+            <Button Click="btnLaunchPlaylist_Click" IsEnabled="false" x:Name="btnLaunchPlaylist">
                 <TextBlock>
                     Launch Playlist
                 </TextBlock>
             </Button>
-            <Button x:Name="btnLaunchSoundboard" Click="BtnLaunchSoundboard_Click">
+            <Button x:Name="btnLaunchSoundboard" Click="BtnLaunchSoundboard_Click" IsEnabled="False">
                 <TextBlock TextAlignment="Center">
                     Launch Soundboard <LineBreak/>
                     {CTRL} + {SHIFT}

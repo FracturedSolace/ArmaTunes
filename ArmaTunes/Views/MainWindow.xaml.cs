@@ -24,6 +24,7 @@ namespace ArmaTunes
     public partial class MainWindow : Window
     {
         public RelayCollection Relays = null;
+        public VLCWrapper VLCPlaylist = new VLCWrapper(VLCWrapper.Default_Playlist);
 
         public MainWindow()
         {
@@ -132,6 +133,7 @@ namespace ArmaTunes
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Relays?.CloseAll();
+            VLCPlaylist.Stop();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -147,6 +149,11 @@ namespace ArmaTunes
             {
                 ToggleMicPassthrough();
             });
+        }
+
+        private void btnLaunchPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            VLCPlaylist.Launch();
         }
     }
 }

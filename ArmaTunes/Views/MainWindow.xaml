@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="300"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <!--Debug text box-->
@@ -59,5 +60,18 @@
             </TextBlock>
         </StackPanel>
         
+        <!--Sound Panel Menu-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Click="btnLaunchPlaylist_Click">
+                <TextBlock>
+                    Launch Playlist
+                </TextBlock>
+            </Button>
+            <Button>
+                <TextBlock>
+                    Launch Soundboard
+                </TextBlock>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

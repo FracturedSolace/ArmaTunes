@@ -119,6 +119,7 @@
     <Compile Include="Models\Debug.cs" />
     <Compile Include="Models\InterceptKeys.cs" />
     <Compile Include="Models\LaunchVAC.cs" />
+    <Compile Include="Models\LaunchVLC.cs" />
     <Compile Include="Models\Test\EnumerateAudioDevices.cs" />
     <Compile Include="Models\WindowsLowLevel\Hook.cs" />
     <Compile Include="Models\WindowsLowLevel\RawInput.cs" />

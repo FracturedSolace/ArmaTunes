@@ -61,7 +61,7 @@ namespace ArmaTunes.Models.WindowsLowLevel
             var helper = new WindowInteropHelper(window);
             if (!RegisterHotKey(helper.Handle, HOTKEY_ID, keyModifiers, keyCode))
             {
-                // handle error
+                throw new Exception("Error registering hotkey");
             }
         }
 

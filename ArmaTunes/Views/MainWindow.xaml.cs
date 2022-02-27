@@ -1,5 +1,6 @@
 ﻿using ArmaTunes.Models;
 using ArmaTunes.Models.WindowsLowLevel;
+using ArmaTunes.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,6 +139,11 @@ namespace ArmaTunes
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            RegisterHotkeys();
+        }
+
+        private void RegisterHotkeys()
+        {
             //Associate the hotkey for music output toggle to CAPS
             new Hotkey(this, 9019, KeyModifiers.None, VirtualKeyCodes.VK_CAPITAL, (object sender2, EventArgs e2) =>
             {
@@ -145,15 +151,32 @@ namespace ArmaTunes
             });
 
             //Associate the hotkey for mic passthrough to TILDE
-            new Hotkey(this, 9020, KeyModifiers.None, VirtualKeyCodes.VK_OEM_3, (object sender2, EventArgs e2) => 
+            new Hotkey(this, 9020, KeyModifiers.None, VirtualKeyCodes.VK_OEM_3, (object sender2, EventArgs e2) =>
             {
                 ToggleMicPassthrough();
             });
+
+            //Associate the hotkey for the soundboard
+            new Hotkey(this, 9021, KeyModifiers.Control | KeyModifiers.Shift, VirtualKeyCodes.VK_SHIFT, (object sender2, EventArgs e2) =>
+            {
+                LaunchSoundboard();
+            });
+        }
+
+        private void LaunchSoundboard()
+        {
+            var window = new SoundboardView();
+            window.Show();
         }
 
         private void btnLaunchPlaylist_Click(object sender, RoutedEventArgs e)
         {
             VLCPlaylist.Launch();
+        }
+
+        private void BtnLaunchSoundboard_Click(object sender, RoutedEventArgs e)
+        {
+            LaunchSoundboard();
         }
     }
 }

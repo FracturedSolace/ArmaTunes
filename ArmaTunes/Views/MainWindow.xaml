@@ -67,9 +67,10 @@
                     Launch Playlist
                 </TextBlock>
             </Button>
-            <Button>
-                <TextBlock>
-                    Launch Soundboard
+            <Button x:Name="btnLaunchSoundboard" Click="BtnLaunchSoundboard_Click">
+                <TextBlock TextAlignment="Center">
+                    Launch Soundboard <LineBreak/>
+                    {CTRL} + {SHIFT}
                 </TextBlock>
             </Button>
         </StackPanel>

@@ -34,7 +34,7 @@ namespace ArmaTunes.Models
             if (autoStop)
                 arguments += " --play-and-exit --no-repeat";
             else
-                arguments += "--random";
+                arguments += " --random";
 
             this.VLCProcess = new Process();
             VLCProcess.StartInfo.FileName = VLC_Dir;
